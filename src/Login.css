@@ -1,0 +1,29 @@
+/* Estilo general del formulario */
+.login-container {
+    background-color: #211e41; /* Fondo oscuro */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Estilo del botón */
+  .login-button {
+    background-color: #a1a6cf; /* Azul brillante */
+    color: white;
+    width: 100%;
+  }
+  
+  .login-button:hover {
+    background-color: #759ecd; /* Azul más oscuro en hover */
+  }
+  
+  /* Estilo de los campos de texto */
+  .text-field {
+    margin-bottom: 1rem;
+    background-color: #1c3436; /* Fondo gris oscuro */
+    border-radius: 5px;
+  }
