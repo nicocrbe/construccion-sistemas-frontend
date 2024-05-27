@@ -6,9 +6,10 @@ import axios from 'axios';
 function LightSequenceControl() {
   // Inicializa los estados de las luces con un id, nombre, duración y orden
   const [lights, setLights] = useState([
-    { id: 'living', name: 'Living', duration: 5, order: 1, isOn: false},
-    { id: 'cocina', name: 'Cocina', duration: 5, order: 2, isOn: false },
+    { id: 'living', name: 'Living', duration: 1, order: 1, isOn: false},
+    { id: 'cocina', name: 'Cocina', duration: 1, order: 2, isOn: false },
   ]);
+  const [repeatInterval, setRepeatInterval] = useState(1);
 
   const handleTurnOn = (id) => {
     console.log(`Encendiendo la luz ${id}`);
@@ -53,13 +54,14 @@ function LightSequenceControl() {
 
   const handleSubmit = async() => {
     // Prepara la configuración de las luces para enviar al backend
+    setRepeatInterval(10)
     const lightConfig = lights.map(({ id, duration, order }) => ({ id, duration, order }));
     //set url base axios
-    axios.defaults.baseURL = 'http://192.168.0.133:80';
+    axios.defaults.baseURL = 'http://192.168.85.175:80';
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     // Envía la configuración al backend
-    await axios.post('/controlar-luces', lightConfig)
+    await axios.post('/controlar-luces', {lightConfig,repeatInterval })
       .then(response => {
         // Manejar la respuesta
       })

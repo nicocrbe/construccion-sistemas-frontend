@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Slider, Paper, Typography, Stack, TextField } from '@mui/material';
+import { Button, Paper, Typography, Stack, TextField } from '@mui/material';
 
 function ServoControl() {
-  const [initialPosition, setInitalPosition] = useState(0);
-  const [finalPosition, setFinalPosition] = useState(180); // Array con posición inicial y final
-  // Array con posición inicial y final
-  const [duration, setDuration] = useState(100); // Duración del movimiento en minutos
+  const [duration, setDuration] = useState(1); // Duración del movimiento en minutos
+  const [repeatInterval, setRepeatInterval] = useState(1);
 
-  const handleChangePosition = (event, newValue) => {
-    console.log('Posición del servo', newValue);
-    setInitalPosition(newValue[0]);
-    setFinalPosition(newValue[1]);
-  };
 
   const handleSetMovement = () => {
-    console.log('Movimiento del servo', initialPosition, finalPosition, duration);
+    console.log('Movimiento del servo',duration);
 
-    axios.defaults.baseURL = 'http://192.168.0.133:80';
+    axios.defaults.baseURL = 'http://192.168.85.175:80';
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-    axios.post('/controlar-servo', { initialPosition,finalPosition,duration })
+    axios.post('/controlar-servo', {duration,repeatInterval})
     .then(response => {
       // Manejar respuesta
     })
@@ -36,22 +29,19 @@ function ServoControl() {
         Control de servo
       </Typography>
       <Stack direction="column" spacing={2} alignItems="center">
-        <Typography gutterBottom>
-          Ajustar recorrido del servo
-        </Typography>
-        <Slider
-          value={[initialPosition, finalPosition]}
-          onChange={handleChangePosition}
-          valueLabelDisplay="auto"
-          min={0}
-          max={180}
-          sx={{ width: '80%', color: 'secondary.main' }}
-        />
         <TextField
           label="Duración del recorrido en minutos"
           variant="outlined"
           value={duration}
           onChange={(e) => setDuration(Number(e.target.value))}
+          type="number"
+          sx={{ input: { color: 'white' }, width: '80%' }}
+        />
+        <TextField
+          label="Intervalo de repeticion en minutos"
+          variant="outlined"
+          value={repeatInterval}
+          onChange={(e) => setRepeatInterval(Number(e.target.value))}
           type="number"
           sx={{ input: { color: 'white' }, width: '80%' }}
         />

@@ -5,9 +5,8 @@ import axios from 'axios';
 function TVControl() {
   // Estado inicial con configuración para la TV
   const [tvSettings, setTvSettings] = useState({
-    powerInterval: 60, // Tiempo en minutos para encender la TV
-    channelChangeInterval: 15, // Tiempo en minutos para cambio de canal
-    volumeChangeInterval: 30, // Tiempo en minutos para cambio de volumen
+    powerInterval: 1,
+    repeatInterval: 1 // Tiempo en minutos para encender la TV
   });
 
   const handleInputChange = (event) => {
@@ -20,7 +19,7 @@ function TVControl() {
 
   const handleSubmit = () => {
 
-    axios.defaults.baseURL = 'http://192.168.0.133:80';
+    axios.defaults.baseURL = 'http://192.168.85.175:80';
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     // Envía la configuración al backend
@@ -40,7 +39,7 @@ function TVControl() {
       </Typography>
       <Stack direction="column" spacing={2}>
         <TextField
-          label="Intervalo de Encendido (min)"
+          label="Intervalo de encendido en minutos"
           variant="outlined"
           name="powerInterval"
           type="number"
@@ -49,25 +48,16 @@ function TVControl() {
           sx={{ input: { color: 'white' } }}
         />
         <TextField
-          label="Intervalo de Cambio de Canal (min)"
+          label="Intervalo de repeticion en minutos"
           variant="outlined"
-          name="channelChangeInterval"
+          name="repeatInterval"
           type="number"
-          value={tvSettings.channelChangeInterval}
-          onChange={handleInputChange}
-          sx={{ input: { color: 'white' } }}
-        />
-        <TextField
-          label="Intervalo de Cambio de Volumen (min)"
-          variant="outlined"
-          name="volumeChangeInterval"
-          type="number"
-          value={tvSettings.volumeChangeInterval}
+          value={tvSettings.repeatInterval}
           onChange={handleInputChange}
           sx={{ input: { color: 'white' } }}
         />
         <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: 2 }}>
-          Guardar configuración
+          Enviar configuración
         </Button>
       </Stack>
     </Paper>

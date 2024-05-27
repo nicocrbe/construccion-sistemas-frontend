@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
+import ConnectionChecker from './components/ConnectionChecker';
 import './App.css';
 
 function App() {
@@ -26,7 +27,10 @@ function App() {
   return (
     <Router>
       {isAuthenticated ? (
+        <>
         <Dashboard onLogout={handleLogout} />
+        <ConnectionChecker /> 
+        </>
       ) : (
         <Login onLogin={handleLogin} />
       )}
