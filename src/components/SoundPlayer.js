@@ -40,7 +40,7 @@ function SoundPlayer() {
   };
 
   return (
-    <Paper elevation={3} sx={{ padding: '2rem', backgroundColor: '#333' }}>
+    <Paper elevation={3} sx={{ padding: '2rem', backgroundColor: '#c9a68a' }}>
       <Typography variant="h5" color="primary" sx={{ textAlign: 'center' }}>
         Reproductor de sonidos
       </Typography>

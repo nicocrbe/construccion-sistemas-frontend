@@ -54,7 +54,7 @@ function LightSequenceControl() {
 
   const handleSubmit = async() => {
     // Prepara la configuración de las luces para enviar al backend
-    setRepeatInterval(10)
+    setRepeatInterval(1)
     const lightConfig = lights.map(({ id, duration, order }) => ({ id, duration, order }));
     //set url base axios
     axios.defaults.baseURL = 'http://192.168.85.175:80';
@@ -71,7 +71,7 @@ function LightSequenceControl() {
   };
 
   return (
-    <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#333' }}>
+    <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#c9a68a' }}>
       <Typography variant="h5" color="primary" sx={{ textAlign: 'center', marginBottom: 2 }}>
         Control de secuencia de luces
       </Typography>

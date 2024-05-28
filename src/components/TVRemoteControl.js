@@ -33,7 +33,7 @@ function TVControl() {
   };
 
   return (
-    <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#333', maxWidth: '100%', margin: 'auto' }}>
+    <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#c9a68a', maxWidth: '100%', margin: 'auto' }}>
       <Typography variant="h5" color="primary" sx={{ textAlign: 'center', marginBottom: 2 }}>
         Configuración de TV
       </Typography>
