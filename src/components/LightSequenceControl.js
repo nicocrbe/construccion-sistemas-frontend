@@ -54,7 +54,6 @@ function LightSequenceControl() {
 
   const handleSubmit = async() => {
     // Prepara la configuración de las luces para enviar al backend
-    setRepeatInterval(1)
     const lightConfig = lights.map(({ id, duration, order }) => ({ id, duration, order }));
     //set url base axios
     axios.defaults.baseURL = 'http://192.168.85.175:80';
@@ -119,6 +118,14 @@ function LightSequenceControl() {
             </Button>
         </Stack>
       ))}
+      <TextField
+          label="Intervalo de repeticion en minutos"
+          variant="outlined"
+          value={repeatInterval}
+          onChange={(e) => setRepeatInterval(Number(e.target.value))}
+          type="number"
+          sx={{ input: { color: 'white' }, width: '80%' }}
+        />
       <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ width: '100%', marginTop: 2 }}>
         Enviar Configuración
       </Button>

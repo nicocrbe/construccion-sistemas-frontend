@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Grid, Card, CardContent, Typography, CircularProgress } from '@mui/material';
+import { Grid, Card, CardContent, Typography, CircularProgress, Button } from '@mui/material';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import TvIcon from '@mui/icons-material/Tv';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
@@ -45,6 +45,18 @@ function Home() {
     fetchStatus();
   }, []);
 
+  const handleResetAllDevices = async () => {
+    axios.defaults.baseURL = 'http://192.168.85.175:80';
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+    try {
+      const response = await axios.post('/reset');
+      console.log('Todos los dispositivos han sido apagados:', response.data);
+    } catch (error) {
+      console.error('Error al resetear dispositivos:', error);
+    }
+  };
+
   const renderCardContent = (moduleKey, IconComponent, moduleName) => {
     const module = moduleStatus[moduleKey];
     
@@ -78,6 +90,17 @@ function Home() {
         <Card raised sx={{ backgroundColor: '#424242' }}>
           {renderCardContent('servo', SettingsInputAntennaIcon, 'Servo')}
         </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          onClick={handleResetAllDevices}
+          variant="contained"
+          color="error"
+          size="large"
+          sx={{ fontSize: '1.2rem' }}
+        >
+          Apagar todos los dispositivos
+        </Button>
       </Grid>
     </Grid>
   );
