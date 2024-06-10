@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography, Stack } from '@mui/material';
-import axios from 'axios';
-import '../Login.css'; // Importa los estilos futuristas personalizados
+import httpClient from '../httpClient';
+import '../Login.css';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
@@ -10,27 +10,18 @@ function Login({ onLogin }) {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    axios.defaults.baseURL = 'http://192.168.85.175:80';
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-
-      await axios.post("/login", { username, password })
-        .then(response => {
-          console.log(response.data.token);
-          console.log(response.data.message);
-          if(response.status === 200 && response.data.message === 'success' && response.data.token) {
-            localStorage.setItem('authToken', response.data.token);
-            onLogin();
-          } else {
-            setError('Credenciales inválidas. Inténtalo de nuevo.');
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          setError('Error al iniciar sesión. Verifica tu conexión.');
-        });
-    
+    try {
+      const response = await httpClient.post("/login", { username, password });
+      if (response.status === 200 && response.data.message === 'success' && response.data.token) {
+        localStorage.setItem('authToken', response.data.token);
+        onLogin();
+      } else {
+        setError('Credenciales inválidas. Inténtalo de nuevo.');
+      }
+    } catch (error) {
+      console.error(error);
+      setError('Error al iniciar sesión. Verifica tu conexión.');
+    }
   };
 
   return (

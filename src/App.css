@@ -1,48 +1,40 @@
-.control {
-  background-color: #f0f0f0;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-button {
-  background-color: #4CAF50;
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  background-color: #303030;
   color: white;
-  border: none;
-  padding: 10px 20px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.login-container {
+  background-color: #211e41;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  max-width: 400px;
+  margin: auto;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  color: white;
 }
 
-button:hover {
-  background-color: #45a049;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-button {
+.login-button {
+  background-color: #a1a6cf;
+  color: white;
   width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-button:hover {
-  background-color: #45a049;
+.login-button:hover {
+  background-color: #759ecd;
+}
+
+.text-field {
+  margin-bottom: 1rem;
+  background-color: #1c3436;
+  border-radius: 5px;
 }
 
 .dashboard {
@@ -67,15 +59,42 @@ button:hover {
   background-color: #555;
 }
 
+.nav-link {
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.nav-link:hover {
+  background-color: #555;
+}
+
+.nav-link-button {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.nav-link-button:hover {
+  background-color: #555;
+}
+
 .content {
   padding: 20px;
   margin-top: 20px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-body {
-  margin: 0;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  background-color: #303030; /* Fondo oscuro para un tema futurista */
-  color: white;
+.light-sequence-control {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
 }
-

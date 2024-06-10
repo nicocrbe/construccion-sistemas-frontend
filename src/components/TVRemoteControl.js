@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Button, TextField, Paper, Typography, Stack } from '@mui/material';
-import axios from 'axios';
+import httpClient from '../httpClient';
 
-function TVControl() {
-  // Estado inicial con configuración para la TV
+function TVRemoteControl() {
   const [tvSettings, setTvSettings] = useState({
     powerInterval: 1,
-    repeatInterval: 1 // Tiempo en minutos para encender la TV
+    repeatInterval: 1
   });
 
   const handleInputChange = (event) => {
@@ -17,19 +16,13 @@ function TVControl() {
     });
   };
 
-  const handleSubmit = () => {
-
-    axios.defaults.baseURL = 'http://192.168.85.175:80';
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    // Envía la configuración al backend
-    axios.post('/controlar-tv', tvSettings)
-      .then(response => {
-        // Manejar respuesta
-      })
-      .catch(error => {
-        // Manejar error
-      });
+  const handleSubmit = async () => {
+    try {
+      await httpClient.post('/controlar-tv', tvSettings);
+      // Manejar respuesta
+    } catch (error) {
+      console.error('Error al enviar configuración de TV', error);
+    }
   };
 
   return (
@@ -45,16 +38,16 @@ function TVControl() {
           type="number"
           value={tvSettings.powerInterval}
           onChange={handleInputChange}
-          sx={{ input: { color: 'white' } }}
+          sx={{ input: { color: 'black' } }}
         />
         <TextField
-          label="Intervalo de repeticion en minutos"
+          label="Intervalo de repetición en minutos"
           variant="outlined"
           name="repeatInterval"
           type="number"
           value={tvSettings.repeatInterval}
           onChange={handleInputChange}
-          sx={{ input: { color: 'white' } }}
+          sx={{ input: { color: 'black' } }}
         />
         <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: 2 }}>
           Enviar configuración
@@ -64,4 +57,4 @@ function TVControl() {
   );
 }
 
-export default TVControl;
+export default TVRemoteControl;

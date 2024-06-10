@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Button, Paper, Typography, Stack, TextField } from '@mui/material';
+import httpClient from '../httpClient';
 
 function ServoControl() {
-  const [duration, setDuration] = useState(1); // Duración del movimiento en minutos
+  const [duration, setDuration] = useState(1);
   const [repeatInterval, setRepeatInterval] = useState(1);
 
-
-  const handleSetMovement = () => {
-    console.log('Movimiento del servo',duration);
-
-    axios.defaults.baseURL = 'http://192.168.85.175:80';
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-    axios.post('/controlar-servo', {duration,repeatInterval})
-    .then(response => {
+  const handleSetMovement = async () => {
+    try {
+      await httpClient.post('/controlar-servo', { duration, repeatInterval });
       // Manejar respuesta
-    })
-    .catch(error => {
-      console.log('Error al enviar movimiento del servo', error)
-    });
+    } catch (error) {
+      console.error('Error al enviar movimiento del servo', error);
+    }
   };
 
   return (
@@ -35,15 +27,15 @@ function ServoControl() {
           value={duration}
           onChange={(e) => setDuration(Number(e.target.value))}
           type="number"
-          sx={{ input: { color: 'white' }, width: '80%' }}
+          sx={{ input: { color: 'black' }, width: '80%' }}
         />
         <TextField
-          label="Intervalo de repeticion en minutos"
+          label="Intervalo de repetición en minutos"
           variant="outlined"
           value={repeatInterval}
           onChange={(e) => setRepeatInterval(Number(e.target.value))}
           type="number"
-          sx={{ input: { color: 'white' }, width: '80%' }}
+          sx={{ input: { color: 'black' }, width: '80%' }}
         />
         <Button variant="contained" color="secondary" onClick={handleSetMovement}>
           Establecer movimiento

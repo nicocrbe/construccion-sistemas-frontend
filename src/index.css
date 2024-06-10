@@ -5,9 +5,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #303030;
+  color: white;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.login-container {
+  background-color: #211e41;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  color: white;
+}
+
+.login-button {
+  background-color: #a1a6cf;
+  color: white;
+  width: 100%;
+}
+
+.login-button:hover {
+  background-color: #759ecd;
+}
+
+.text-field {
+  margin-bottom: 1rem;
+  background-color: #1c3436;
+  border-radius: 5px;
 }

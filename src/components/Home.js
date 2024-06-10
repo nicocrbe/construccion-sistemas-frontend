@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Grid, Card, CardContent, Typography, CircularProgress, Button } from '@mui/material';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import TvIcon from '@mui/icons-material/Tv';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
+import httpClient from '../httpClient';
 
 function Home() {
   const [moduleStatus, setModuleStatus] = useState({
@@ -18,10 +18,10 @@ function Home() {
     const fetchStatus = async () => {
       try {
         const [lightsResponse, tvResponse, soundsResponse, servoResponse] = await Promise.all([
-          axios.get('/api/lights/status'),
-          axios.get('/api/tv/status'),
-          axios.get('/api/sounds/status'),
-          axios.get('/api/servo/status')
+          httpClient.get('/api/lights/status'),
+          httpClient.get('/api/tv/status'),
+          httpClient.get('/api/sounds/status'),
+          httpClient.get('/api/servo/status')
         ]);
 
         setModuleStatus({
@@ -46,11 +46,8 @@ function Home() {
   }, []);
 
   const handleResetAllDevices = async () => {
-    axios.defaults.baseURL = 'http://192.168.85.175:80';
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     try {
-      const response = await axios.post('/reset');
+      const response = await httpClient.post('/reset');
       console.log('Todos los dispositivos han sido apagados:', response.data);
     } catch (error) {
       console.error('Error al resetear dispositivos:', error);
@@ -97,7 +94,7 @@ function Home() {
           variant="contained"
           color="error"
           size="large"
-          sx={{ fontSize: '1.2rem' }}
+          sx={{ fontSize: '1.2rem', width: '100%' }}
         >
           Apagar todos los dispositivos
         </Button>

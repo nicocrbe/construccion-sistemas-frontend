@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Paper, Typography, FormControl, InputLabel, Select, MenuItem, IconButton, List, ListItem, ListItemText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import axios from 'axios';
+import httpClient from '../httpClient';
 
 function SoundPlayer() {
   const [soundList, setSoundList] = useState([]);
@@ -19,7 +19,7 @@ function SoundPlayer() {
   const handleAddSound = () => {
     if (soundConfig.sound && soundConfig.interval && soundConfig.startTime && soundConfig.endTime) {
       setSoundList([...soundList, { ...soundConfig }]);
-      setSoundConfig({ sound: '', interval: '', startTime: '', endTime: '' }); // Reset form after adding
+      setSoundConfig({ sound: '', interval: '', startTime: '', endTime: '' });
     }
   };
 
@@ -27,16 +27,15 @@ function SoundPlayer() {
     setSoundList(soundList.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('sounds', JSON.stringify(soundList));
-    axios.post('/api/sounds/settings', formData)
-      .then(response => {
-        // Handle response
-      })
-      .catch(error => {
-        // Handle error
-      });
+    try {
+      await httpClient.post('/api/sounds/settings', formData);
+      // Manejar respuesta
+    } catch (error) {
+      console.error('Error al enviar configuración de sonidos', error);
+    }
   };
 
   return (
@@ -55,7 +54,6 @@ function SoundPlayer() {
         >
           <MenuItem value="dog-barks">Ladridos de perros</MenuItem>
           <MenuItem value="conversations">Conversaciones</MenuItem>
-          {/* Add more sounds as needed */}
         </Select>
       </FormControl>
       <TextField
@@ -100,7 +98,7 @@ function SoundPlayer() {
               </IconButton>
             }
           >
-            <ListItemText primary={`${sound.value} cada ${sound.interval} minutos desde ${sound.startTime} hasta ${sound.endTime}`} />
+            <ListItemText primary={`${sound.sound} cada ${sound.interval} minutos desde ${sound.startTime} hasta ${sound.endTime}`} />
           </ListItem>
         ))}
       </List>
@@ -112,4 +110,3 @@ function SoundPlayer() {
 }
 
 export default SoundPlayer;
-
