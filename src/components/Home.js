@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardContent, Typography, CircularProgress, Button } from '@mui/material';
+import { Grid, Card, CardContent, Typography, CircularProgress, Button, Box } from '@mui/material';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import TvIcon from '@mui/icons-material/Tv';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
 import httpClient from '../httpClient';
@@ -9,7 +8,6 @@ import httpClient from '../httpClient';
 function Home() {
   const [moduleStatus, setModuleStatus] = useState({
     lights: { loading: true, data: null },
-    tv: { loading: true, data: null },
     sounds: { loading: true, data: null },
     servo: { loading: true, data: null }
   });
@@ -17,16 +15,14 @@ function Home() {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const [lightsResponse, tvResponse, soundsResponse, servoResponse] = await Promise.all([
+        const [lightsResponse, soundsResponse, servoResponse] = await Promise.all([
           httpClient.get('/api/lights/status'),
-          httpClient.get('/api/tv/status'),
           httpClient.get('/api/sounds/status'),
           httpClient.get('/api/servo/status')
         ]);
 
         setModuleStatus({
           lights: { loading: false, data: lightsResponse.data, error: null },
-          tv: { loading: false, data: tvResponse.data, error: null },
           sounds: { loading: false, data: soundsResponse.data, error: null },
           servo: { loading: false, data: servoResponse.data, error: null }
         });
@@ -35,7 +31,6 @@ function Home() {
         setModuleStatus(prevStatus => ({
           ...prevStatus,
           lights: { ...prevStatus.lights, loading: false, error },
-          tv: { ...prevStatus.tv, loading: false, error },
           sounds: { ...prevStatus.sounds, loading: false, error },
           servo: { ...prevStatus.servo, loading: false, error }
         }));
@@ -67,28 +62,25 @@ function Home() {
   };
 
   return (
-    <Grid container spacing={2} sx={{ padding: '20px' }}>
-      <Grid item xs={12} sm={6} md={3}>
-        <Card raised sx={{ backgroundColor: '#424242' }}>
-          {renderCardContent('lights', LightbulbIcon, 'Luces')}
-        </Card>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: '20px' }}>
+      <Grid container spacing={2} sx={{ maxWidth: 1200, justifyContent: 'center' }}>
+        <Grid item xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Card raised sx={{ backgroundColor: '#424242', width: '100%', maxWidth: 300 }}>
+            {renderCardContent('lights', LightbulbIcon, 'Luces')}
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Card raised sx={{ backgroundColor: '#424242', width: '100%', maxWidth: 300 }}>
+            {renderCardContent('sounds', MusicNoteIcon, 'Sonidos')}
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Card raised sx={{ backgroundColor: '#424242', width: '100%', maxWidth: 300 }}>
+            {renderCardContent('servo', SettingsInputAntennaIcon, 'Servo')}
+          </Card>
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
-        <Card raised sx={{ backgroundColor: '#424242' }}>
-          {renderCardContent('tv', TvIcon, 'Televisión')}
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={6} md={3}>
-        <Card raised sx={{ backgroundColor: '#424242' }}>
-          {renderCardContent('sounds', MusicNoteIcon, 'Sonidos')}
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={6} md={3}>
-        <Card raised sx={{ backgroundColor: '#424242' }}>
-          {renderCardContent('servo', SettingsInputAntennaIcon, 'Servo')}
-        </Card>
-      </Grid>
-      <Grid item xs={12}>
+      <Box sx={{ width: '100%', maxWidth: 1200, marginTop: 2 }}>
         <Button
           onClick={handleResetAllDevices}
           variant="contained"
@@ -98,8 +90,8 @@ function Home() {
         >
           Apagar todos los dispositivos
         </Button>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }
 

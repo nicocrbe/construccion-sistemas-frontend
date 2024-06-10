@@ -17,7 +17,7 @@ function ServoControl() {
 
   return (
     <Paper elevation={3} sx={{ padding: '20px', margin: '20px', backgroundColor: '#c9a68a' }}>
-      <Typography variant="h5" gutterBottom color="primary">
+      <Typography variant="h5" gutterBottom color="primary" textAlign="center">
         Control de servo
       </Typography>
       <Stack direction="column" spacing={2} alignItems="center">
