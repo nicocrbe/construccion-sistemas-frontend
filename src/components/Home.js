@@ -16,15 +16,15 @@ function Home() {
     const fetchStatus = async () => {
       try {
         const [lightsResponse, soundsResponse, servoResponse] = await Promise.all([
-          httpClient.get('/api/lights/status'),
-          httpClient.get('/api/sounds/status'),
-          httpClient.get('/api/servo/status')
+          httpClient.get('/lights/status'),
+          httpClient.get('/sounds/status'),
+          httpClient.get('/servo/status')
         ]);
 
         setModuleStatus({
-          lights: { loading: false, data: lightsResponse.data, error: null },
-          sounds: { loading: false, data: soundsResponse.data, error: null },
-          servo: { loading: false, data: servoResponse.data, error: null }
+          lights: { loading: false, data: lightsResponse.data.status, error: null },
+          sounds: { loading: false, data: soundsResponse.data.status, error: null },
+          servo: { loading: false, data: servoResponse.data.status, error: null }
         });
       } catch (error) {
         console.error('Error fetching module status:', error);
