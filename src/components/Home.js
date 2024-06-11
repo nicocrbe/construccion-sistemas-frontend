@@ -16,15 +16,15 @@ function Home() {
     const fetchStatus = async () => {
       try {
         const [lightsResponse, soundsResponse, servoResponse] = await Promise.all([
-          httpClient.get('/lights/status'),
-          httpClient.get('/sounds/status'),
-          httpClient.get('/servo/status')
+          httpClient.get('/api/lights/status'),
+          httpClient.get('/api/sounds/status'),
+          httpClient.get('/api/servo/status')
         ]);
 
         setModuleStatus({
-          lights: { loading: false, data: lightsResponse.data.status, error: null },
-          sounds: { loading: false, data: soundsResponse.data.status, error: null },
-          servo: { loading: false, data: servoResponse.data.status, error: null }
+          lights: { loading: false, data: lightsResponse.data.status },
+          sounds: { loading: false, data: soundsResponse.data.status },
+          servo: { loading: false, data: servoResponse.data.status }
         });
       } catch (error) {
         console.error('Error fetching module status:', error);
@@ -51,12 +51,18 @@ function Home() {
 
   const renderCardContent = (moduleKey, IconComponent, moduleName) => {
     const module = moduleStatus[moduleKey];
-    
+    const statusText = module.data === 'ENCENDIDO' ? 'ENCENDIDO' : 'APAGADO';
+    const statusColor = module.data === 'ENCENDIDO' ? 'green' : 'red';
+
     return (
       <CardContent>
         <IconComponent sx={{ fontSize: 40 }} />
         <Typography variant="h5">{moduleName}</Typography>
-        {module.loading ? <CircularProgress /> : <Typography variant="body2">{module.data}</Typography>}
+        {module.loading ? <CircularProgress /> : (
+          <Typography variant="body2" sx={{ color: statusColor }}>
+            {statusText}
+          </Typography>
+        )}
       </CardContent>
     );
   };

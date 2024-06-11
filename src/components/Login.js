@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';  // Importar useNavigate
 import httpClient from '../httpClient';
-import '../Login.css';
+import '../Login.css'; // Importa los estilos futuristas personalizados
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();  // Usar useNavigate
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     try {
-      const response = await httpClient.post("/login", { username, password });
+      const response = await httpClient.post('/login', { username, password });
+
       if (response.status === 200 && response.data.message === 'success' && response.data.token) {
         localStorage.setItem('authToken', response.data.token);
         onLogin();
+        navigate('/home');  // Redirigir a /home después de un login exitoso
       } else {
         setError('Credenciales inválidas. Inténtalo de nuevo.');
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
       setError('Error al iniciar sesión. Verifica tu conexión.');
     }
   };
