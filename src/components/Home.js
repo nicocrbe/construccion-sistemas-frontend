@@ -16,15 +16,15 @@ function Home() {
     const fetchStatus = async () => {
       try {
         const [lightsResponse, soundsResponse, servoResponse] = await Promise.all([
-          httpClient.get('/api/lights/status'),
-          httpClient.get('/api/sounds/status'),
-          httpClient.get('/api/servo/status')
+          httpClient.get('/lights/status'),
+         // httpClient.get('/sounds/status'),
+          httpClient.get('/servo/status')
         ]);
 
         setModuleStatus({
-          lights: { loading: false, data: lightsResponse.data.status },
-          sounds: { loading: false, data: soundsResponse.data.status },
-          servo: { loading: false, data: servoResponse.data.status }
+          lights: { loading: false, data: lightsResponse?.data?.status },
+          sounds: { loading: false, data: soundsResponse?.data?.status },
+          servo: { loading: false, data: servoResponse?.data?.status }
         });
       } catch (error) {
         console.error('Error fetching module status:', error);
@@ -51,8 +51,8 @@ function Home() {
 
   const renderCardContent = (moduleKey, IconComponent, moduleName) => {
     const module = moduleStatus[moduleKey];
-    const statusText = module.data === 'ENCENDIDO' ? 'ENCENDIDO' : 'APAGADO';
-    const statusColor = module.data === 'ENCENDIDO' ? 'green' : 'red';
+    const statusText = module?.data === 'ENCENDIDO' ? 'Encendido' : 'Apagado';
+    const statusColor = module?.data === 'ENCENDIDO' ? 'green' : 'red';
 
     return (
       <CardContent>
