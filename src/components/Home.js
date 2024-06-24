@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Card, CardContent, Typography, CircularProgress, Button, Box } from '@mui/material';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
 import httpClient from '../httpClient';
 
 function Home() {
   const [moduleStatus, setModuleStatus] = useState({
     lights: { loading: true, data: null },
-    sounds: { loading: true, data: null },
     servo: { loading: true, data: null }
   });
 
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const [lightsResponse, soundsResponse, servoResponse] = await Promise.all([
+        const [lightsResponse,servoResponse] = await Promise.all([
           httpClient.get('/lights/status'),
-         // httpClient.get('/sounds/status'),
           httpClient.get('/servo/status')
         ]);
 
         setModuleStatus({
           lights: { loading: false, data: lightsResponse?.data?.status },
-          sounds: { loading: false, data: soundsResponse?.data?.status },
           servo: { loading: false, data: servoResponse?.data?.status }
         });
       } catch (error) {
@@ -31,7 +27,6 @@ function Home() {
         setModuleStatus(prevStatus => ({
           ...prevStatus,
           lights: { ...prevStatus.lights, loading: false, error },
-          sounds: { ...prevStatus.sounds, loading: false, error },
           servo: { ...prevStatus.servo, loading: false, error }
         }));
       }
@@ -73,11 +68,6 @@ function Home() {
         <Grid item xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'center' }}>
           <Card raised sx={{ backgroundColor: '#424242', width: '100%', maxWidth: 300 }}>
             {renderCardContent('lights', LightbulbIcon, 'Luces')}
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Card raised sx={{ backgroundColor: '#424242', width: '100%', maxWidth: 300 }}>
-            {renderCardContent('sounds', MusicNoteIcon, 'Sonidos')}
           </Card>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', justifyContent: 'center' }}>

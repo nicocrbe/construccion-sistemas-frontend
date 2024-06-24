@@ -1,37 +1,20 @@
 import React, { useState } from 'react';
-import { Button, TextField, Paper, Typography, FormControl, InputLabel, Select, MenuItem, IconButton, List, ListItem, ListItemText } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, TextField, Paper, Typography, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import httpClient from '../httpClient';
 
 function SoundPlayer() {
-  const [soundList, setSoundList] = useState([]);
   const [soundConfig, setSoundConfig] = useState({
     sound: '',
-    interval: '',
-    startTime: '',
-    endTime: '',
+    interval: ''
   });
   
   const handleSoundConfigChange = (event) => {
     setSoundConfig({ ...soundConfig, [event.target.name]: event.target.value });
   };
 
-  const handleAddSound = () => {
-    if (soundConfig.sound && soundConfig.interval && soundConfig.startTime && soundConfig.endTime) {
-      setSoundList([...soundList, { ...soundConfig }]);
-      setSoundConfig({ sound: '', interval: '', startTime: '', endTime: '' });
-    }
-  };
-
-  const handleRemoveSound = (index) => {
-    setSoundList(soundList.filter((_, i) => i !== index));
-  };
-
   const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append('sounds', JSON.stringify(soundList));
     try {
-      await httpClient.post('/api/sounds/settings', formData);
+      await httpClient.post('/sounds/settings', soundConfig);
       // Manejar respuesta
     } catch (error) {
       console.error('Error al enviar configuración de sonidos', error);
@@ -52,8 +35,9 @@ function SoundPlayer() {
           onChange={handleSoundConfigChange}
           name="sound"
         >
-          <MenuItem value="dog-barks">Ladridos de perros</MenuItem>
-          <MenuItem value="conversations">Conversaciones</MenuItem>
+          <MenuItem value="Ladridos">Ladridos de perros</MenuItem>
+          <MenuItem value="Conversaciones">Conversaciones</MenuItem>
+          <MenuItem value="Lavarropas">Lavarropas</MenuItem>
         </Select>
       </FormControl>
       <TextField
@@ -65,43 +49,6 @@ function SoundPlayer() {
         fullWidth
         sx={{ mb: 2 }}
       />
-      <TextField
-        type="time"
-        label="Hora de Inicio"
-        name="startTime"
-        InputLabelProps={{ shrink: true }}
-        value={soundConfig.startTime}
-        onChange={handleSoundConfigChange}
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        type="time"
-        label="Hora de Fin"
-        name="endTime"
-        InputLabelProps={{ shrink: true }}
-        value={soundConfig.endTime}
-        onChange={handleSoundConfigChange}
-        fullWidth
-        sx={{ mb: 2 }}
-      />
-      <Button variant="contained" onClick={handleAddSound} sx={{ mb: 2 }}>
-        Añadir a la lista
-      </Button>
-      <List>
-        {soundList.map((sound, index) => (
-          <ListItem
-            key={index}
-            secondaryAction={
-              <IconButton edge="end" onClick={() => handleRemoveSound(index)}>
-                <DeleteIcon />
-              </IconButton>
-            }
-          >
-            <ListItemText primary={`${sound.sound} cada ${sound.interval} minutos desde ${sound.startTime} hasta ${sound.endTime}`} />
-          </ListItem>
-        ))}
-      </List>
       <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ mt: 2, width: '100%' }}>
         Enviar configuración
       </Button>
