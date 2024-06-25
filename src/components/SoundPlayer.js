@@ -37,7 +37,6 @@ function SoundPlayer() {
         >
           <MenuItem value="Ladridos">Ladridos de perros</MenuItem>
           <MenuItem value="Conversaciones">Conversaciones</MenuItem>
-          <MenuItem value="Lavarropas">Lavarropas</MenuItem>
         </Select>
       </FormControl>
       <TextField
