@@ -35,8 +35,10 @@ function SoundPlayer() {
           onChange={handleSoundConfigChange}
           name="sound"
         >
-          <MenuItem value="Ladridos">Ladridos de perros</MenuItem>
-          <MenuItem value="Conversaciones">Conversaciones</MenuItem>
+          <MenuItem value="1">Ladridos de perros</MenuItem>
+          <MenuItem value="2">Conversaciones</MenuItem>
+          <MenuItem value="3">Lavarropas</MenuItem>
+          <MenuItem value="4">Cocina</MenuItem>
         </Select>
       </FormControl>
       <TextField
