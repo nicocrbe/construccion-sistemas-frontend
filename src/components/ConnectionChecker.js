@@ -22,7 +22,7 @@ function ConnectionChecker() {
   useEffect(() => {
     const interval = setInterval(() => {
       checkBackendConnection();
-    }, 10000); // 300000 ms = 5 minutos
+    }, 15000); // 300000 ms = 5 minutos
 
     return () => clearInterval(interval); // Limpiar el intervalo
   }, [checkBackendConnection]);
