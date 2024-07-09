@@ -22,7 +22,7 @@ function ConnectionChecker() {
   useEffect(() => {
     const interval = setInterval(() => {
       checkBackendConnection();
-    }, process.env.TIME_TO_MAIL); // 300000 ms = 5 minutos
+    }, 10000); // 300000 ms = 5 minutos
 
     return () => clearInterval(interval); // Limpiar el intervalo
   }, [checkBackendConnection]);
